@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _homeContent() {
     return ListView.builder(
+      // scrollDirection: Axis.horizontal, //uncomment using Horizontal List Data
       controller: _controller,
       physics: BouncingScrollPhysics(),
       padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -40,42 +41,50 @@ class _HomePageState extends State<HomePage> {
           );
         } else {
           return Container(
-            margin: EdgeInsets.all(8.0),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailPage(result: _listData[index]),
+            margin: EdgeInsets.all(7.0),
+            // width: 160, //uncomment using Horizontal List Data
+            // height: 10, //uncomment using Horizontal List Data
+            child:
+            // Wrap( //uncomment using Horizontal List Data
+            //   children: <Widget>[ //uncomment using Horizontal List Data
+                Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                  child:
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailPage(result: _listData[index]),
+                        ),
+                      );
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8.0),
+                            topRight: Radius.circular(8.0),
+                          ),
+                          child: Image.network(
+                              "https://image.tmdb.org/t/p/w500" +
+                                  _listData[index].backdropPath,
+                              // width: 300,
+                              height: 150,
+                              fit: BoxFit.fill),
+                        ),
+                        ListTile(
+                          title: Text(_listData[index].originalTitle,
+                              textAlign: TextAlign.center),
+                        ),
+                      ],
                     ),
-                  );
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8.0),
-                        topRight: Radius.circular(8.0),
-                      ),
-                      child: Image.network(
-                          "https://image.tmdb.org/t/p/w500" +
-                              _listData[index].backdropPath,
-                          // width: 300,
-                          height: 150,
-                          fit: BoxFit.fill),
-                    ),
-                    ListTile(
-                      title: Text(_listData[index].originalTitle,
-                          textAlign: TextAlign.center),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+            //   ], //uncomment using Horizontal List Data
+            // ) //uncomment using Horizontal List Data
           );
         }
       },
